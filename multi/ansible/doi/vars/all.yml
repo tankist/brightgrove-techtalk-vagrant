@@ -1,0 +1,34 @@
+---
+apache_remove_default_vhost: true
+apache_vhosts:
+  - servername: 'atest.com'
+    serveralias: '46.101.254.222'
+    documentroot: '/var/www/html'
+apache_mods_disabled: []
+
+php_packages:
+  - php7.0
+  - php7.0-curl
+  - php7.0-cli
+  - php7.0-intl
+  - php7.0-json
+  - php7.0-dev
+  - php7.0-mysql
+  - php7.0-opcache
+  - php-memcached
+  - php7.0-mbstring
+  - php7.0-mcrypt
+  - php7.0-bcmath
+php_enable_webserver: false
+php_webserver_daemon: "apache2"
+php_enable_php_fpm: false
+php_enable_apc: false
+
+php_xdebug_remote_enable: 1
+php_xdebug_remote_connect_back: 1
+php_xdebug_idekey: 'phpstorm.xdebug'
+php_xdebug_module_path: '/usr/lib/php'
+
+nodejs_version: '6.x'
+
+adminer_symlink_dirs: ['/var/www/html']

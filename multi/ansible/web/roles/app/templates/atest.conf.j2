@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+  ServerName atest.lan
+  ServerAlias www.atest.lan
+  DocumentRoot /var/www/atest
+
+  ErrorLog /var/www/atest/logs/atest.error.log
+  CustomLog /var/www/atest/logs/atest.access.log combined
+  LogLevel info
+
+  <Directory /var/www/atest/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>

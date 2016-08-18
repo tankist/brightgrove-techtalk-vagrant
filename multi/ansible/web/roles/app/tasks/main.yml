@@ -1,0 +1,28 @@
+---
+# application tasks to be customized and to run after the main provision
+
+- name: Remove opcache config
+  file: path=/etc/php5/conf.d/05-opcache.ini state=absent
+
+- name: Compile environment virtual host
+  template:
+    src: "{{ item }}.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_items: "{{ app_environments }}"
+  when: app_environments is defined
+  register: app_ini
+
+- name: Enable environment virtual host
+  file:
+    path="/etc/apache2/sites-enabled/{{ item }}.conf"
+    src="/etc/apache2/sites-available/{{ item }}.conf"
+    state=link
+    owner=root group=root
+  with_items: "{{ app_environments }}"
+  when: app_ini|changed and app_environments is defined
+  become: yes
+  notify: restart apache

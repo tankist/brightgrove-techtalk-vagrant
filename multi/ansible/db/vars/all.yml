@@ -1,0 +1,5 @@
+---
+mysql_users:
+    - { name: 'atest', password: 'atest', priv: 'atest.*:ALL', host: '%' }
+mysql_databases:
+    - { name: 'atest' }

@@ -1,0 +1,9 @@
+# install_roles.yml
+
+- src: geerlingguy.composer
+- src: geerlingguy.adminer
+- src: geerlingguy.memcached
+- src: geerlingguy.apache
+- src: geerlingguy.php
+- src: geerlingguy.php-xdebug
+- src: geerlingguy.nodejs

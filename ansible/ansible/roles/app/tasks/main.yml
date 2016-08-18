@@ -1,0 +1,22 @@
+---
+# application tasks to be customized and to run after the main provision
+
+- name: Compile environment virtual host
+  template:
+    src: "atest.conf.j2"
+    dest: "/etc/apache2/sites-available/atest.conf"
+    owner: root
+    group: root
+    mode: 0644
+  register: app_ini
+
+- name: Enable environment virtual host
+  file:
+    path: "/etc/apache2/sites-enabled/atest.conf"
+    src: "/etc/apache2/sites-available/atest.conf"
+    state: link
+    owner: root
+    group: root
+  notify: restart apache
+  when: app_ini|changed
+  become: yes

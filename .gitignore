@@ -1,0 +1,7 @@
+.idea
+#ansible/.vagrant
+#simple/.vagrant
+#multi/.vagrant
+.vagrant
+**/logs/*
+!**/logs/.gitkeep

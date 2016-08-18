@@ -1,0 +1,45 @@
+---
+# application tasks to be customized and to run after the main provision
+
+- name: Add repository for PHP 7.0
+  apt_repository: repo='ppa:ondrej/php'
+  become: yes
+
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: present
+  become: yes
+
+- name: Install PHP 7
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ php_packages }}'
+  when: php_packages is defined
+  become: yes
+
+- name: Compile environment virtual host
+  template:
+    src: "atest.conf.j2"
+    dest: "/etc/apache2/sites-available/atest.conf"
+    owner: root
+    group: root
+    mode: 0644
+  register: app_ini
+
+- name: Enable environment virtual host
+  file:
+    path: "/etc/apache2/sites-enabled/atest.conf"
+    src: "/etc/apache2/sites-available/atest.conf"
+    state: link
+    owner: root
+    group: root
+  when: app_ini|changed
+  become: yes
+
+- name: Restart apache
+  service: 
+    name: apache2
+    state: restarted
+  become: yes

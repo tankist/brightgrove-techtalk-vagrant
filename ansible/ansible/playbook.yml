@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - vars/all.yml
+
+  pre_tasks:
+    - name: Add repository for PHP 7.0
+      apt_repository: repo='ppa:ondrej/php'
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - geerlingguy.apache
+    - geerlingguy.php
+    - geerlingguy.mysql
+    - app
